@@ -16,11 +16,20 @@ def fix_marks(name):
         print('Returned more than 1 result. Aborting.')
     except ObjectDoesNotExist:
         print('Matching query does not exist. Aborting.')
+    return True
 
 
-def remove_chastisements(schoolkid):
-    child_chastisements = Chastisement.objects.filter(schoolkid=schoolkid)
-    return child_chastisements.delete()
+def remove_chastisements(name):
+    year_of_study = 6
+    try:
+        child = Schoolkid.objects.get(full_name__contains=name, year_of_study=year_of_study)
+        child_chastisements = Chastisement.objects.filter(schoolkid=child)
+        child_chastisements.delete()
+    except MultipleObjectsReturned:
+        print('Returned more than 1 result. Aborting.')
+    except ObjectDoesNotExist:
+        print('Matching query does not exist. Aborting.')
+    return True
 
 
 def create_commendation(name, subject):
@@ -55,3 +64,4 @@ def create_commendation(name, subject):
         print('Returned more than 1 result. Aborting.')
     except ObjectDoesNotExist:
         print('Matching query does not exist. Aborting.')
+    return True
