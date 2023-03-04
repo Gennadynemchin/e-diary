@@ -36,7 +36,6 @@ def create_commendation(name, subject):
         subject = Subject.objects.filter(title__contains=subject, year_of_study=year_of_study).first()
         lesson = Lesson.objects.filter(year_of_study=year_of_study, subject=subject, group_letter=group_letter)
         last_lesson_date = str(lesson.order_by('-date').first().date)
-        print(last_lesson_date)
         teacher = lesson.first().teacher
 
         Commendation.objects.create(text=text,
@@ -49,5 +48,3 @@ def create_commendation(name, subject):
         print('Returned more than 1 result. Aborting.')
     except ObjectDoesNotExist:
         print('Matching query does not exist. Aborting.')
-
-
