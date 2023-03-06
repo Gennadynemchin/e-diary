@@ -1,4 +1,4 @@
-from datacenter.models import *
+from datacenter.models import Schoolkid, Subject, Commendation, Lesson
 from django.core.exceptions import MultipleObjectsReturned, ObjectDoesNotExist
 from django.core.management.base import BaseCommand
 import random
@@ -11,8 +11,9 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         year_of_study = 6
-        name = options.get('name')
-        subject = options.get('subject')
+        name = options.get('name')[0]
+        subject = options.get('subject')[0]
+        print(name, subject)
         commendations = ['Молодец!', 'Отлично!', 'Хорошо!', 'Гораздо лучше, чем я ожидал!', 'Ты меня приятно удивил!',
                          'Великолепно!', 'Прекрасно!', 'Ты меня очень обрадовал!', 'Именно этого я давно ждал от тебя!',
                          'Сказано здорово – просто и ясно!', 'Ты, как всегда, точен!', 'Очень хороший ответ!',
@@ -37,9 +38,8 @@ class Command(BaseCommand):
                                         schoolkid=child,
                                         subject=subject,
                                         teacher=teacher)
-            print('Created!')
+            return 'Finished!'
         except MultipleObjectsReturned:
             print('Returned more than 1 result. Aborting.')
         except ObjectDoesNotExist:
             print('Matching query does not exist. Aborting.')
-        return
