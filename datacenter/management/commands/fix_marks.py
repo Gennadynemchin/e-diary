@@ -12,11 +12,7 @@ class Command(BaseCommand):
         name = options.get('name')[0]
         try:
             child = Schoolkid.objects.get(full_name__contains=name, year_of_study=year_of_study)
-            marks = Mark.objects.filter(schoolkid=child)
-            bad_points = marks.filter(points__in=[2, 3])
-            for bad_point in bad_points:
-                bad_point.points = 5
-                bad_point.save()
+            Mark.objects.filter(schoolkid=child, points__in=[2, 3]).update(points=5)
             return 'Finished!'
         except MultipleObjectsReturned:
             print('Returned more than 1 result. Aborting.')

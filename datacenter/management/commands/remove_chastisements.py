@@ -15,7 +15,7 @@ class Command(BaseCommand):
             child_chastisements = Chastisement.objects.filter(schoolkid=child)
             child_chastisements.delete()
             return 'Finished!'
-        except MultipleObjectsReturned:
+        except Schoolkid.MultipleObjectsReturned:
             print('Returned more than 1 result. Aborting.')
-        except ObjectDoesNotExist:
+        except Schoolkid.DoesNotExist:
             print('Matching query does not exist. Aborting.')
