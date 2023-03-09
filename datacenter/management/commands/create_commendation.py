@@ -23,12 +23,12 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         name = options.get('name')[0]
         subject = options.get('subject')[0]
-        year_of_study = 6
-        group_letter = 'А'
         text = str(random.choice(COMMENDATIONS))
 
         try:
-            child = Schoolkid.objects.get(full_name__contains=name, year_of_study=year_of_study)
+            child = Schoolkid.objects.get(full_name__contains=name)
+            year_of_study = child.year_of_study
+            group_letter = child.group_letter
             subject = Subject.objects.get(title__contains=subject, year_of_study=year_of_study)
             lessons = Lesson.objects.filter(year_of_study=year_of_study,
                                             subject=subject,

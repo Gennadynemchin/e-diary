@@ -8,10 +8,9 @@ class Command(BaseCommand):
         parser.add_argument('name', nargs='+', type=str)
 
     def handle(self, *args, **options):
-        year_of_study = 6
         name = options.get('name')[0]
         try:
-            child = Schoolkid.objects.get(full_name__contains=name, year_of_study=year_of_study)
+            child = Schoolkid.objects.get(full_name__contains=name)
             Mark.objects.filter(schoolkid=child, points__in=[2, 3]).update(points=5)
             return 'Finished!'
         except MultipleObjectsReturned:
