@@ -43,3 +43,5 @@ class Command(BaseCommand):
             print('Returned more than 1 result. Aborting.')
         except ObjectDoesNotExist:
             print('Matching query does not exist. Aborting.')
+        except AttributeError:
+            print('Looks like you have entered the wrong subject. Please double check. Aborting.')
