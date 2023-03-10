@@ -1,5 +1,4 @@
 from datacenter.models import Schoolkid, Mark
-from django.core.exceptions import MultipleObjectsReturned, ObjectDoesNotExist
 from django.core.management.base import BaseCommand
 
 
@@ -13,8 +12,7 @@ class Command(BaseCommand):
             child = Schoolkid.objects.get(full_name__contains=name)
             Mark.objects.filter(schoolkid=child, points__in=[2, 3]).update(points=5)
             return 'Finished!'
-        except MultipleObjectsReturned:
+        except Schoolkid.MultipleObjectsReturned:
             print('Returned more than 1 result. Aborting.')
-        except ObjectDoesNotExist:
+        except Schoolkid.DoesNotExist:
             print('Matching query does not exist. Aborting.')
-    

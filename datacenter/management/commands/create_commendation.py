@@ -1,5 +1,4 @@
 from datacenter.models import Schoolkid, Subject, Commendation, Lesson
-from django.core.exceptions import MultipleObjectsReturned, ObjectDoesNotExist
 from django.core.management.base import BaseCommand
 import random
 
@@ -30,11 +29,11 @@ class Command(BaseCommand):
             year_of_study = child.year_of_study
             group_letter = child.group_letter
             subject = Subject.objects.get(title__contains=subject, year_of_study=year_of_study)
-            lessons = Lesson.objects.filter(year_of_study=year_of_study,
+            lesson = Lesson.objects.filter(year_of_study=year_of_study,
                                             subject=subject,
                                             group_letter=group_letter).order_by('-date').first()
-            last_lesson_date = lessons.date
-            teacher = lessons.teacher
+            last_lesson_date = lesson.date
+            teacher = lesson.teacher
             Commendation.objects.create(text=text,
                                         created=last_lesson_date,
                                         schoolkid=child,
@@ -45,5 +44,7 @@ class Command(BaseCommand):
             print('Returned more than 1 result. Aborting.')
         except Schoolkid.DoesNotExist:
             print('Matching query does not exist. Aborting.')
+        except Lesson.DoesNotExist:
+            print('There is no requested lesson. Aborting.')
         except Subject.DoesNotExist:
             print('Looks like you have entered the wrong subject. Please double check. Aborting.')
