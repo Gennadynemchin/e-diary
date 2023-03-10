@@ -30,8 +30,8 @@ class Command(BaseCommand):
             group_letter = child.group_letter
             subject = Subject.objects.get(title__contains=subject, year_of_study=year_of_study)
             lesson = Lesson.objects.filter(year_of_study=year_of_study,
-                                            subject=subject,
-                                            group_letter=group_letter).order_by('-date').first()
+                                           subject=subject,
+                                           group_letter=group_letter).order_by('-date').first()
             last_lesson_date = lesson.date
             teacher = lesson.teacher
             Commendation.objects.create(text=text,

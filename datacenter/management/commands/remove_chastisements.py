@@ -1,5 +1,4 @@
 from datacenter.models import Schoolkid, Chastisement
-from django.core.exceptions import MultipleObjectsReturned, ObjectDoesNotExist
 from django.core.management.base import BaseCommand
 
 
