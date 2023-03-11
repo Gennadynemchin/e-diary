@@ -32,6 +32,9 @@ class Command(BaseCommand):
             lesson = Lesson.objects.filter(year_of_study=year_of_study,
                                            subject=subject,
                                            group_letter=group_letter).order_by('-date').first()
+            if lesson is None:
+                print("Requested lesson hasn't been found. Aborting")
+                return 'Not finished!'
             last_lesson_date = lesson.date
             teacher = lesson.teacher
             Commendation.objects.create(text=text,
@@ -44,7 +47,5 @@ class Command(BaseCommand):
             print('Returned more than 1 result. Aborting.')
         except Schoolkid.DoesNotExist:
             print('Matching query does not exist. Aborting.')
-        except AttributeError:
-            print('There is no requested lesson. Aborting.')
         except Subject.DoesNotExist:
             print('Looks like you have entered the wrong subject. Please double check. Aborting.')
