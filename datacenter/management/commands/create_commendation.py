@@ -44,7 +44,7 @@ class Command(BaseCommand):
             print('Returned more than 1 result. Aborting.')
         except Schoolkid.DoesNotExist:
             print('Matching query does not exist. Aborting.')
-        except Lesson.DoesNotExist:
+        except AttributeError:
             print('There is no requested lesson. Aborting.')
         except Subject.DoesNotExist:
             print('Looks like you have entered the wrong subject. Please double check. Aborting.')
